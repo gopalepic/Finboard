@@ -2,3 +2,5 @@
 /dist
 /.env
 /tsconfig.json
+/config/env
+/config/.env

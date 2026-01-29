@@ -1,6 +1,6 @@
-const { Candle } = require('./stocks.types');
+import { Candle } from "./stocks.types";
 
-async function adaptDailyCandle(rawData: any): Candle[] {
+export function adaptDailyCandle(rawData: any): Candle[] {
 
     if (rawData["Error Message"] || rawData["Error"]) {
         throw new Error("Alpha Vantage error or rate limit exceeded");
