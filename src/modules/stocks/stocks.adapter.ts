@@ -6,10 +6,13 @@ export function adaptDailyCandle(rawData: any): Candle[] {
         throw new Error("Alpha Vantage error or rate limit exceeded");
     }
 
-    const timeSeries = rawData["Time series (Daily)"];
+    // console.log("Raw data from Alpha Vantage:", rawData);
+    const timeSeries = rawData["Time Series (Daily)"];
     if (!timeSeries) {
         throw new Error("Invalid data format from Alpha Vantage");
     };
+
+    // console.log("Time Series data:", timeSeries);
 
     const candles:Candle[] = Object.entries(timeSeries).map(([date, values] : [string, any]) => ({
 
