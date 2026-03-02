@@ -4,3 +4,5 @@
 /tsconfig.json
 /config/env
 /config/.env
+/.vscode 
+/logs
