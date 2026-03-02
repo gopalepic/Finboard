@@ -17,14 +17,18 @@ class MemoryCache {
             return null;
         }
 
+        console.log(`store ` + JSON.stringify(this.store));
+
         return entry.data;
     }
 
     set<T>(key: string, data: T , ttlMs:number) : void{
+        console.log(`Setting cache for ${key} with TTL ${ttlMs}ms`);
         this.store.set(key, {
             data,
             expiresAt: Date.now() + ttlMs
         });
+        console.log(`store after set ` + JSON.stringify(this.store));
     }
 }
 

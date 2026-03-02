@@ -1,9 +1,9 @@
 import { Router } from 'express'
-import { getDailyCandlesController } from "./stocks.controller";
+import { getDailyCandlesController , getCandelsController } from "./stocks.controller";
 
 const router = Router();
 
-router.get('/candles/daily/:symbol', getDailyCandlesController);
+router.get('/candles/:symbol', getCandelsController);
 
 export default router;
 
