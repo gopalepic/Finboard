@@ -1,11 +1,6 @@
-import { Candle } from "./stocks.types";
+import { Candle, Quote, StockSearchResult } from "./stocks.types";
 
 export function adaptDailyCandle(rawData: any, responseKey: string): Candle[] {
-  const responseKeyMap = {
-    daily: "Time Series (Daily)",
-    weekly: "Weekly Time Series",
-    monthly: "Monthly Time Series",
-  };
   if (rawData["Error Message"] || rawData["Error"]) {
     throw new Error("Alpha Vantage error or rate limit exceeded");
   }
@@ -29,4 +24,42 @@ export function adaptDailyCandle(rawData: any, responseKey: string): Candle[] {
 
   candles.sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1));
   return candles;
+}
+
+export function adaptQuote(rawData: any): Quote {
+  if (rawData["Error Message"] || rawData["Note"]) {
+    throw new Error("Alpha Vantage error or rate limit exceeded");
+  }
+
+  const quote = rawData["Global Quote"];
+  if (!quote) {
+    throw new Error("Invalid data format from Alpha Vantage");
+  }
+
+  return {
+    symbol: quote["01. symbol"],
+    price: Number(quote["05. price"]),
+    changePercent: quote["10. change percent"],
+  };
+}
+
+
+export function adaptSearch(rawData: any): StockSearchResult[]{
+
+  if (rawData["Error Message"] || rawData["Note"]) {
+    throw new Error("Alpha Vantage error or rate limit exceeded");
+  }
+
+  const matchs = rawData["bestMatches"];
+  if (!matchs) {
+    throw new Error("Invalid data format from Alpha Vantage");
+  }
+
+
+  return matchs.map((item :any) => ({
+    symbol: item["1. symbol"],
+    name: item["2. name"],
+    region: item["4. region"],
+    currency: item["8. currency"]
+  }))
 }
