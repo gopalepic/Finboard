@@ -90,6 +90,7 @@ export async function getQuote(symbol: string): Promise<Quote> {
 
   const normalized = adaptQuote(response.data);
 
+  console.log(`Fetched quote for ${symbol} from API:`, normalized);
   // shorter TTL for quotes (more dynamic)
   memoryCache.set(cacheKey, normalized, 30 * 1000);
 
